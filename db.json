@@ -1,0 +1,13 @@
+{
+  "words": [
+    {
+      "id": 2,
+      "englishWord": "hello",
+      "wordType": "Article",
+      "vietNamWord": "xin chào"
+    }
+  ],
+  "posts": [],
+  "comments": [],
+  "profile": {}
+}
