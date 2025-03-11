@@ -2,9 +2,27 @@
   "words": [
     {
       "id": 2,
-      "englishWord": "hello",
+      "englishWord": "hello1",
       "wordType": "Article",
+      "vietNamWord": "xin chào12"
+    },
+    {
+      "id": 3,
+      "englishWord": "title",
+      "wordType": "Noun",
       "vietNamWord": "xin chào"
+    },
+    {
+      "id": 4,
+      "englishWord": "hello",
+      "wordType": "Noun",
+      "vietNamWord": "xin chào"
+    },
+    {
+      "id": 5,
+      "englishWord": "week",
+      "wordType": "Noun",
+      "vietNamWord": "tuần"
     }
   ],
   "posts": [],

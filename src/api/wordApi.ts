@@ -2,6 +2,7 @@ import axios from "axios";
 import { Word } from "../models/word.model";
 
 const API_URL = "http://localhost:3000/words";
+// const API_URL = "https://7d21-42-113-154-62.ngrok-free.app/words"
 
 export const getWords = async () => {
     const response = await axios.get(API_URL);

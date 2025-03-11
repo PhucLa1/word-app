@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/table"
 import { getWords } from '@/api/wordApi';
 import { Word } from '@/models/word.model';
-import { Button } from './ui/button';
 import WordCRUD from './WordCRUD';
 import { State } from '@/enum/state.enum';
 import useLoading from '@/hooks/useLoading';
+import { Button } from "antd";
 export default function WordList() {
     const [words, setWords] = useState<Word[]>([]);
     const [word, setWord] = useState<Word>()
@@ -66,8 +66,8 @@ export default function WordList() {
                                 <TableCell>{word.vietNamWord}</TableCell>
                                 <TableCell>
                                     <div className='flex items-center justify-between'>
-                                        <Button onClick={() => handleOpenChange(State.UPDATE, index)} variant={"default"}>Chỉnh sửa</Button>
-                                        <Button onClick={() => handleOpenChange(State.DELETE, index)} className='ml-2' variant={"destructive"}>Xóa</Button>
+                                        <Button onClick={() => handleOpenChange(State.UPDATE, index)} >Chỉnh sửa</Button>
+                                        <Button onClick={() => handleOpenChange(State.DELETE, index)} className='ml-2'>Xóa</Button>
                                     </div>
                                 </TableCell>
                             </TableRow>

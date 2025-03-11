@@ -11,7 +11,6 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button } from "@/components/ui/button"
 import { State } from '@/enum/state.enum'
 import { Word, wordDefault, wordSchema } from '@/models/word.model'
 import { useForm } from 'react-hook-form';
@@ -20,6 +19,8 @@ import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { WordType } from '@/enum/wordtype.enum';
 import { addWord, deleteWord, getWords, updateWord } from '@/api/wordApi';
+import useLoading from '@/hooks/useLoading';
+import { Button } from './ui/button';
 type FormProps = {
     open: boolean,
     setOpen: (value: boolean) => void,
@@ -31,6 +32,7 @@ export default function WordCRUD({ open, setOpen, state, word }: FormProps) {
         resolver: zodResolver(wordSchema),
         defaultValues: wordDefault
     });
+    const { isLoading, stopLoading, startLoading } = useLoading()
     const getTitle = () => {
         switch (state) {
             case State.CREATE:
@@ -57,9 +59,12 @@ export default function WordCRUD({ open, setOpen, state, word }: FormProps) {
         }
     };
     const onSubmit = (values: Word) => {
-        if (state === State.CREATE) handleCreate(values);
-        else if (state === State.UPDATE) handleUpdate(values)
-
+        startLoading()
+        setTimeout(() => {
+            if (state === State.CREATE) handleCreate(values);
+            else if (state === State.UPDATE) handleUpdate(values);
+            stopLoading()
+        }, 1000); // Trì hoãn 1 giây (1000ms)
     };
 
     const handleDelete = async () => {
@@ -75,6 +80,7 @@ export default function WordCRUD({ open, setOpen, state, word }: FormProps) {
     const handleCreate = async (value: Word) => {
         await addWord(value);
         setOpen(false);
+
     };
 
     useEffect(() => {
@@ -160,7 +166,7 @@ export default function WordCRUD({ open, setOpen, state, word }: FormProps) {
                             </div>
                             <AlertDialogFooter className='mt-4'>
                                 <AlertDialogCancel>Hủy</AlertDialogCancel>
-                                <Button type="submit">Tiếp tục</Button>
+                                <Button loading={isLoading}>Tiếp tục</Button>
                             </AlertDialogFooter>
                         </form>
                     </Form>
@@ -174,9 +180,10 @@ export default function WordCRUD({ open, setOpen, state, word }: FormProps) {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Hủy</AlertDialogCancel>
-                    <Button onClick={() => handleDelete()}>Tiếp tục</Button>
+                    <Button loading={isLoading} onClick={() => handleDelete()}>Tiếp tục</Button>
                 </AlertDialogFooter>
             </AlertDialogContent>}
         </AlertDialog>
     )
 }
+
