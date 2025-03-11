@@ -13,16 +13,20 @@ import { Word } from '@/models/word.model';
 import { Button } from './ui/button';
 import WordCRUD from './WordCRUD';
 import { State } from '@/enum/state.enum';
+import useLoading from '@/hooks/useLoading';
 export default function WordList() {
     const [words, setWords] = useState<Word[]>([]);
     const [word, setWord] = useState<Word>()
     const [open, setOpen] = useState<boolean>(false)
     const [state, setState] = useState<State>()
+    const { isLoading, stopLoading, startLoading } = useLoading()
     useEffect(() => {
         const fetchWords = async () => {
             try {
+                startLoading();
                 const data = await getWords(); // Gọi API lấy danh sách từ
                 setWords(data); // Lưu vào state
+                stopLoading()
             } catch (error) {
                 console.error("Lỗi khi lấy dữ liệu:", error);
             }
@@ -36,6 +40,7 @@ export default function WordList() {
         setState(state)
         if (index != undefined) setWord(words[index])
     }
+    if (isLoading) return <></>
     return (
         <>
             <WordCRUD open={open} setOpen={setOpen} state={state!} word={word} />
